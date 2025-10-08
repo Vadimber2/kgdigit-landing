@@ -3,8 +3,8 @@ import { Calendar, Clock, Users, Check, ArrowRight, Code, Briefcase } from 'luci
 import { useCourse } from '../context/CourseContext';
 
 // Импортируем SVG
-import version0 from '../assets/version 0.png';
-import version02 from '../assets/version 0-2.png';
+import version0 from '../assets/version 0-2.png';
+import version02 from '../assets/version 0.png';
 
 const Hero = () => {
     const { courseType, setCourseType } = useCourse();
