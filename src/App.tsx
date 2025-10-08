@@ -7,8 +7,12 @@ import Program from './components/Program';
 import WhatYouLearn from './components/WhatYouLearn';
 import Benefits from './components/Benefits';
 import Requirements from './components/Requirements';
+import FAQ from './components/FAQ';
 import Register from './components/Register';
 import Footer from './components/Footer';
+import Pricing from './components/Pricing';
+import Testimonials from './components/Testimonials';
+import HowItWorks from './components/HowItWorks';
 
 // Executive компоненты
 import AudienceExecutive from './components/executive/AudienceExecutive';
@@ -30,19 +34,26 @@ const AppContent = () => {
                     <Audience />
                     <Program />
                     <WhatYouLearn />
+                    <HowItWorks />
+                    <Testimonials />
                     <Benefits />
                     <Requirements />
+                    <Pricing />
                 </>
             ) : (
                 <>
                     <AudienceExecutive />
                     <ProgramExecutive />
                     <WhatYouLearnExecutive />
+                    <HowItWorks />
+                    <Testimonials />
                     <BenefitsExecutive />
                     <RequirementsExecutive />
+                    <Pricing />
                 </>
             )}
 
+            <FAQ />
             <Register />
             <Footer />
         </div>

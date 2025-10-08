@@ -1,7 +1,11 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const WhatYouLearn = () => {
+    const titleAnimation = useScrollAnimation();
+    const cardsAnimation = useScrollAnimation({ threshold: 0.1 });
+
     const outcomes = [
         {
             title: "Эффективно работать с веб-приложением claude.ai",
@@ -50,7 +54,12 @@ const WhatYouLearn = () => {
     return (
         <div id="outcomes" className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-6">
-                <div className="max-w-3xl mx-auto text-center mb-16">
+                <div
+                    ref={titleAnimation.ref}
+                    className={`max-w-3xl mx-auto text-center mb-16 ${
+                        titleAnimation.isVisible ? 'animate-fade-in' : 'animate-on-scroll'
+                    }`}
+                >
                     <h2 className="text-4xl font-semibold text-gray-900 mb-4">
                         Цели и результаты обучения
                     </h2>
@@ -59,11 +68,18 @@ const WhatYouLearn = () => {
                     </p>
                 </div>
 
-                <div className="max-w-5xl mx-auto space-y-8">
+                <div
+                    ref={cardsAnimation.ref}
+                    className="max-w-5xl mx-auto space-y-8"
+                >
                     {outcomes.map((outcome, index) => (
                         <div
                             key={index}
-                            className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200"
+                            className={`bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 border border-gray-200 ${
+                                cardsAnimation.isVisible
+                                    ? `animate-slide-in-${index % 2 === 0 ? 'left' : 'right'} stagger-${Math.min(index + 1, 6)}`
+                                    : 'animate-on-scroll'
+                            }`}
                         >
                             <div className="flex items-start gap-4 mb-6">
                                 <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0 font-semibold">
