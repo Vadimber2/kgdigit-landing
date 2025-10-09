@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const Program = () => {
     const [activeDay, setActiveDay] = useState(1);
     const [selectedTopic, setSelectedTopic] = useState<any>(null);
+
+    const titleAnimation = useScrollAnimation();
+    const tabsAnimation = useScrollAnimation({ threshold: 0.3 });
 
     const days = [
         {
@@ -407,23 +411,33 @@ const Program = () => {
     ];
 
     return (
-        <div id="program" className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-6">
-                <div className="max-w-3xl mx-auto text-center mb-16">
-                    <h2 className="text-4xl font-semibold text-gray-900 mb-4">
+        <div id="program" className="py-12 sm:py-20 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6">
+                <div
+                    ref={titleAnimation.ref}
+                    className={`max-w-3xl mx-auto text-center mb-12 sm:mb-16 ${
+                        titleAnimation.isVisible ? 'animate-fade-in' : 'animate-on-scroll'
+                    }`}
+                >
+                    <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-3 sm:mb-4">
                         Программа обучения
                     </h2>
-                    <p className="text-xl text-gray-600">
+                    <p className="text-lg sm:text-xl text-gray-600">
                         Четыре насыщенных дня от основ до enterprise решений
                     </p>
                 </div>
 
-                <div className="flex justify-center gap-4 mb-12 flex-wrap">
+                <div
+                    ref={tabsAnimation.ref}
+                    className={`grid grid-cols-2 sm:flex sm:justify-center gap-3 sm:gap-4 mb-8 sm:mb-12 max-w-md sm:max-w-none mx-auto ${
+                        tabsAnimation.isVisible ? 'animate-slide-up-fade' : 'animate-on-scroll'
+                    }`}
+                >
                     {days.map((item) => (
                         <button
                             key={item.day}
                             onClick={() => setActiveDay(item.day)}
-                            className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                            className={`px-3 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                                 activeDay === item.day
                                     ? 'bg-gray-900 text-white shadow-lg'
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -441,28 +455,29 @@ const Program = () => {
                             key={item.day}
                             className={`${activeDay === item.day ? 'block' : 'hidden'}`}
                         >
-                            <div className="bg-gradient-to-br from-orange-50 to-blue-50 rounded-2xl p-8 mb-8 border border-gray-200">
-                                <h3 className="text-3xl font-semibold text-gray-900 mb-3">
+                            <div className="bg-gradient-to-br from-orange-50 to-blue-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 border border-gray-200">
+                                <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 mb-2 sm:mb-3">
                                     {item.title}
                                 </h3>
-                                <p className="text-lg text-gray-600">
+                                <p className="text-base sm:text-lg text-gray-600">
                                     {item.description}
                                 </p>
                             </div>
 
-                            <div className="space-y-6">
+                            <div className="space-y-4 sm:space-y-6">
                                 {item.topics.map((topic, index) => (
                                     <div
                                         key={index}
                                         onClick={() => setSelectedTopic(topic)}
-                                        className="bg-white rounded-xl p-6 border border-gray-200 hover:border-orange-300 transition-all cursor-pointer hover:shadow-md"
+                                        className="bg-white rounded-xl p-4 sm:p-6 border border-gray-200 hover:border-orange-300 transition-all cursor-pointer hover:shadow-md animate-slide-up-fade"
+                                        style={{ animationDelay: `${index * 0.1}s` }}
                                     >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-sm font-medium">
+                                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 sm:mb-4 gap-2">
+                                            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                                                <div className="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs sm:text-sm font-medium w-fit">
                                                     {topic.time}
                                                 </div>
-                                                <h4 className="text-xl font-semibold text-gray-900">
+                                                <h4 className="text-lg sm:text-xl font-semibold text-gray-900">
                                                     {topic.title}
                                                 </h4>
                                             </div>
@@ -472,7 +487,7 @@ const Program = () => {
                                         </div>
                                         <ul className="space-y-2">
                                             {topic.items.map((item, i) => (
-                                                <li key={i} className="flex items-start gap-2 text-gray-700">
+                                                <li key={i} className="flex items-start gap-2 text-sm sm:text-base text-gray-700">
                                                     <span className="text-orange-500 mt-1">•</span>
                                                     <span>{item}</span>
                                                 </li>
@@ -486,7 +501,6 @@ const Program = () => {
                 </div>
             </div>
 
-            {/* Modal */}
             <Modal
                 isOpen={!!selectedTopic}
                 onClose={() => setSelectedTopic(null)}
