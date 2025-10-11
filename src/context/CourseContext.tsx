@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-type CourseType = 'developer' | 'executive';
+// Добавляем 'claude-code' в тип
+export type CourseType = 'developer' | 'executive' | 'claude-code';
 
 interface CourseContextType {
     courseType: CourseType;
@@ -9,7 +10,7 @@ interface CourseContextType {
 
 const CourseContext = createContext<CourseContextType | undefined>(undefined);
 
-export const CourseProvider = ({ children }: { children: ReactNode }) => {
+export const CourseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [courseType, setCourseType] = useState<CourseType>('developer');
 
     return (
@@ -21,8 +22,8 @@ export const CourseProvider = ({ children }: { children: ReactNode }) => {
 
 export const useCourse = () => {
     const context = useContext(CourseContext);
-    if (!context) {
-        throw new Error('useCourse must be used within CourseProvider');
+    if (context === undefined) {
+        throw new Error('useCourse must be used within a CourseProvider');
     }
     return context;
 };
