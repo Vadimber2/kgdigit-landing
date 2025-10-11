@@ -1,10 +1,11 @@
 import React from 'react';
-import { Calendar, Clock, Users, Check, ArrowRight, Code, Briefcase } from 'lucide-react';
+import { Calendar, Clock, Users, Check, ArrowRight, Code, Briefcase, Zap } from 'lucide-react';
 import { useCourse } from '../context/CourseContext';
 
 // Импортируем SVG
 import version0 from '../assets/version 0-2.png';
 import version02 from '../assets/version 0.png';
+import VersionRObot from '../assets/VersionRObot.png';
 
 const Hero = () => {
     const { courseType, setCourseType } = useCourse();
@@ -19,40 +20,63 @@ const Hero = () => {
                         alt="Claude Interface"
                         className="w-full h-auto"
                     />
-                ) : (
+                ) : courseType === 'executive' ? (
                     <img
                         src={version02}
                         alt="Claude for Business"
                         className="w-full h-auto"
                     />
+                ) : (
+                    <img
+                        src={VersionRObot}
+                        alt="Claude Code Robot"
+                        className="w-full h-auto"
+                    />
                 )}
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 sm:py-32 w-full z-10">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-32 w-full z-10">
                 {/* Переключатель курсов */}
                 <div className="mb-12 sm:mb-16">
-                    <div className="inline-flex bg-white rounded-xl sm:rounded-2xl p-1.5 sm:p-2 shadow-lg border border-gray-200 w-full sm:w-auto">
+                    <div className="inline-flex bg-white rounded-xl sm:rounded-2xl p-1.5 sm:p-2 shadow-lg border border-gray-200 w-full sm:w-auto flex-wrap gap-1 sm:gap-0">
                         <button
                             onClick={() => setCourseType('developer')}
-                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
+                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
                                 courseType === 'developer'
                                     ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
                                     : 'text-gray-600 hover:text-gray-900'
                             }`}
                         >
-                            <Code className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="whitespace-nowrap">Разработчикам</span>
+                            <Code className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap hidden xs:inline">Разработчикам</span>
+                            <span className="whitespace-nowrap xs:hidden">Dev</span>
+                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(3-4д)</span>
                         </button>
                         <button
                             onClick={() => setCourseType('executive')}
-                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
+                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
                                 courseType === 'executive'
                                     ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
                                     : 'text-gray-600 hover:text-gray-900'
                             }`}
                         >
-                            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="whitespace-nowrap">Руководителям</span>
+                            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap hidden xs:inline">Руководителям</span>
+                            <span className="whitespace-nowrap xs:hidden">Exec</span>
+                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(3д)</span>
+                        </button>
+                        <button
+                            onClick={() => setCourseType('claude-code')}
+                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
+                                courseType === 'claude-code'
+                                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
+                                    : 'text-gray-600 hover:text-gray-900'
+                            }`}
+                        >
+                            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="whitespace-nowrap hidden xs:inline">Claude Code</span>
+                            <span className="whitespace-nowrap xs:hidden">Code</span>
+                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(1д)</span>
                         </button>
                     </div>
                 </div>
@@ -104,7 +128,7 @@ const Hero = () => {
                                 </div>
                             </div>
                         </>
-                    ) : (
+                    ) : courseType === 'executive' ? (
                         <>
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 sm:mb-8 leading-tight tracking-tight">
                                 Anthropic Claude: AI для стратегических решений и роста бизнеса
@@ -146,6 +170,73 @@ const Hero = () => {
                                 <div className="flex items-center gap-2">
                                     <Check className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                                     <span>Реальные кейсы</span>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="inline-block px-4 py-2 bg-orange-100 text-orange-700 rounded-full mb-4 text-sm font-semibold">
+                                ⚡ Интенсивный однодневный курс
+                            </div>
+
+                            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 sm:mb-8 leading-tight tracking-tight">
+                                Claude Code: Однодневнный интенсив
+                            </h1>
+
+                            <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-12 leading-relaxed">
+                                Освойте агентное программирование за один день. Делегируйте часы работы AI-агенту и автоматизируйте разработку от установки до CI/CD
+                            </p>
+
+                            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12">
+                                <a
+                                    href="#register"
+                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-lg sm:rounded-xl hover:from-orange-600 hover:to-orange-700 transition-all text-sm sm:text-base font-medium shadow-lg"
+                                >
+                                    Записаться на интенсив
+                                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                                </a>
+                                <a
+                                    href="#program"
+                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-900 rounded-lg sm:rounded-xl hover:bg-gray-50 transition-all text-sm sm:text-base font-medium border border-gray-300"
+                                >
+                                    Программа 6 часов
+                                </a>
+                            </div>
+
+                            <div className="flex flex-wrap gap-4 sm:gap-6 text-sm sm:text-base text-gray-600">
+                                <div className="flex items-center gap-2">
+                                    <Calendar className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 text-orange-500" />
+                                    <span className="font-medium">1 день</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Clock className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 text-orange-500" />
+                                    <span className="font-medium">6 акад. часов</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Users className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 text-orange-500" />
+                                    <span className="font-medium">15-20 человек</span>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Check className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0 text-orange-500" />
+                                    <span className="font-medium">Сертификат</span>
+                                </div>
+                            </div>
+
+                            {/* Дополнительный блок для Claude Code */}
+                            <div className="mt-8 sm:mt-12 p-6 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200">
+                                <div className="grid grid-cols-3 gap-4 text-center">
+                                    <div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">4</div>
+                                        <div className="text-xs sm:text-sm text-gray-600">блока практики</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">10x</div>
+                                        <div className="text-xs sm:text-sm text-gray-600">ускорение</div>
+                                    </div>
+                                    <div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">CI/CD</div>
+                                        <div className="text-xs sm:text-sm text-gray-600">автоматизация</div>
+                                    </div>
                                 </div>
                             </div>
                         </>

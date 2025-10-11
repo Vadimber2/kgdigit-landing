@@ -21,6 +21,12 @@ import WhatYouLearnExecutive from './components/executive/WhatYouLearnExecutive'
 import BenefitsExecutive from './components/executive/BenefitsExecutive';
 import RequirementsExecutive from './components/executive/RequirementsExecutive';
 
+// Claude Code компоненты
+import AudienceClaudeCode from './components/claudecode/AudienceClaudeCode';
+import ProgramClaudeCode from './components/claudecode/ProgramClaudeCode';
+import WhatYouLearnClaudeCode from './components/claudecode/WhatYouLearnClaudeCode';
+import RequirementsClaudeCode from './components/claudecode/RequirementsClaudeCode';
+
 const AppContent = () => {
     const { courseType } = useCourse();
 
@@ -29,7 +35,7 @@ const AppContent = () => {
             <Header />
             <Hero />
 
-            {courseType === 'developer' ? (
+            {courseType === 'developer' && (
                 <>
                     <Audience />
                     <Program />
@@ -40,7 +46,9 @@ const AppContent = () => {
                     <Requirements />
                     <Pricing />
                 </>
-            ) : (
+            )}
+
+            {courseType === 'executive' && (
                 <>
                     <AudienceExecutive />
                     <ProgramExecutive />
@@ -50,6 +58,18 @@ const AppContent = () => {
                     <BenefitsExecutive />
                     <RequirementsExecutive />
                     <Pricing />
+                </>
+            )}
+
+            {courseType === 'claude-code' && (
+                <>
+                    <AudienceClaudeCode />
+                    <ProgramClaudeCode />
+                    <WhatYouLearnClaudeCode />
+                    <Benefits />
+                    <RequirementsClaudeCode />
+                    <Pricing />
+                    <Testimonials />
                 </>
             )}
 
