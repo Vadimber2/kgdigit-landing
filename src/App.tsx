@@ -21,11 +21,11 @@ import WhatYouLearnExecutive from './components/executive/WhatYouLearnExecutive'
 import BenefitsExecutive from './components/executive/BenefitsExecutive';
 import RequirementsExecutive from './components/executive/RequirementsExecutive';
 
-// Claude Code компоненты
-import AudienceClaudeCode from './components/claudecode/AudienceClaudeCode';
-import ProgramClaudeCode from './components/claudecode/ProgramClaudeCode';
-import WhatYouLearnClaudeCode from './components/claudecode/WhatYouLearnClaudeCode';
-import RequirementsClaudeCode from './components/claudecode/RequirementsClaudeCode';
+// Claude Code компоненты (с БОЛЬШОЙ буквы - как в вашей папке)
+import AudienceClaudeCode from './components/ClaudeCode/AudienceClaudeCode';
+import ProgramClaudeCode from './components/ClaudeCode/ProgramClaudeCode';
+import WhatYouLearnClaudeCode from './components/ClaudeCode/WhatYouLearnClaudeCode';
+import RequirementsClaudeCode from './components/ClaudeCode/RequirementsClaudeCode';
 
 const AppContent = () => {
     const { courseType } = useCourse();
