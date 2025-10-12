@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import Pricing from './components/Pricing';
 import Testimonials from './components/Testimonials';
 import HowItWorks from './components/HowItWorks';
+import Mentor from './components/Mentor';
 
 // Executive компоненты
 import AudienceExecutive from './components/executive/AudienceExecutive';
@@ -39,6 +40,7 @@ const AppContent = () => {
                 <>
                     <Audience />
                     <Program />
+                    <Mentor />
                     <WhatYouLearn />
                     <HowItWorks />
                     <Testimonials />
@@ -52,6 +54,7 @@ const AppContent = () => {
                 <>
                     <AudienceExecutive />
                     <ProgramExecutive />
+                    <Mentor/>
                     <WhatYouLearnExecutive />
                     <HowItWorks />
                     <Testimonials />
@@ -65,6 +68,7 @@ const AppContent = () => {
                 <>
                     <AudienceClaudeCode />
                     <ProgramClaudeCode />
+                    <Mentor />
                     <WhatYouLearnClaudeCode />
                     <Benefits />
                     <RequirementsClaudeCode />
