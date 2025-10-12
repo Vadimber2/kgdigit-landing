@@ -1,10 +1,72 @@
-import React, { useState } from 'react';
-import { Clock, Coffee, Code, GitBranch, Shield, Presentation, CheckCircle } from 'lucide-react';
-import Modal from '../Modal';
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
+import React, { useState, useEffect, useRef } from 'react';
+import { Clock, Coffee, Code, GitBranch, Shield, Presentation, CheckCircle, X } from 'lucide-react';
+
+// Modal Component
+const Modal = ({ isOpen, onClose, title, children }: any) => {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
+            <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+                    <h3 className="text-2xl font-semibold text-gray-900">{title}</h3>
+                    <button
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+                </div>
+                <div className="p-6">{children}</div>
+            </div>
+        </div>
+    );
+};
+
+// useScrollAnimation Hook
+const useScrollAnimation = (options = {}) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1, ...options }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, []);
+
+    return { ref, isVisible };
+};
 
 const ProgramClaudeCode = () => {
     const [selectedBlock, setSelectedBlock] = useState<any>(null);
+    const [activeBlockIndex, setActiveBlockIndex] = useState(0);
     const titleAnimation = useScrollAnimation();
     const scheduleAnimation = useScrollAnimation({ threshold: 0.1 });
 
@@ -118,6 +180,23 @@ const ProgramClaudeCode = () => {
         }
     ];
 
+    // Отфильтрованные блоки без брейков для нижней навигации
+    const nonBreakBlocks = schedule.filter(block => !block.isBreak);
+
+    const handleBlockClick = (block: any, index: number) => {
+        if (!block.isBreak) {
+            setSelectedBlock(block);
+            setActiveBlockIndex(nonBreakBlocks.findIndex(b => b.time === block.time));
+        }
+    };
+
+    const handleBottomNavClick = (index: number) => {
+        const block = nonBreakBlocks[index];
+        setActiveBlockIndex(index);
+        setSelectedBlock(block);
+        document.getElementById('program')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     return (
         <div id="program" className="py-12 sm:py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -159,7 +238,7 @@ const ProgramClaudeCode = () => {
 
                 <div
                     ref={scheduleAnimation.ref}
-                    className="max-w-4xl mx-auto space-y-4"
+                    className="max-w-4xl mx-auto space-y-4 mb-20 sm:mb-0"
                 >
                     {schedule.map((block, index) => {
                         const Icon = block.icon;
@@ -168,7 +247,7 @@ const ProgramClaudeCode = () => {
                         return (
                             <div
                                 key={index}
-                                onClick={() => !isBreak && setSelectedBlock(block)}
+                                onClick={() => handleBlockClick(block, index)}
                                 className={`rounded-xl p-6 border transition-all ${
                                     isBreak
                                         ? 'bg-amber-50 border-amber-200 cursor-default'
@@ -221,6 +300,29 @@ const ProgramClaudeCode = () => {
                             </div>
                         );
                     })}
+                </div>
+
+                {/* Mobile Bottom Navigation - только на мобильных */}
+                <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-lg">
+                    <div className="grid grid-cols-4 gap-2 max-w-md mx-auto">
+                        {nonBreakBlocks.map((block, index) => {
+                            const Icon = block.icon;
+                            return (
+                                <button
+                                    key={index}
+                                    onClick={() => handleBottomNavClick(index)}
+                                    className={`flex flex-col items-center gap-1 px-2 py-2.5 rounded-lg font-medium transition-all text-xs ${
+                                        activeBlockIndex === index
+                                            ? 'bg-gray-900 text-white shadow-lg'
+                                            : 'bg-gray-100 text-gray-700 active:bg-gray-200'
+                                    }`}
+                                >
+                                    <Icon className="w-4 h-4" />
+                                    <span>Блок {index + 1}</span>
+                                </button>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
 

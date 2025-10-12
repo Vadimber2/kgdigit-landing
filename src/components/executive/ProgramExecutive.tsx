@@ -1,6 +1,68 @@
-import React, { useState } from 'react';
-import Modal from '../Modal';
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
+import React, { useState, useEffect, useRef } from 'react';
+import { X } from 'lucide-react';
+
+// Modal Component
+const Modal = ({ isOpen, onClose, title, children }: any) => {
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
+            <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
+                <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
+                    <h3 className="text-2xl font-semibold text-gray-900">{title}</h3>
+                    <button
+                        onClick={onClose}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
+                </div>
+                <div className="p-6">{children}</div>
+            </div>
+        </div>
+    );
+};
+
+// useScrollAnimation Hook
+const useScrollAnimation = (options = {}) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.1, ...options }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, []);
+
+    return { ref, isVisible };
+};
 
 const ProgramExecutive = () => {
     const [activeDay, setActiveDay] = useState(1);
@@ -8,6 +70,11 @@ const ProgramExecutive = () => {
 
     const titleAnimation = useScrollAnimation();
     const tabsAnimation = useScrollAnimation({ threshold: 0.3 });
+
+    const handleDayChange = (day: number) => {
+        setActiveDay(day);
+        document.getElementById('program')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     const days = [
         {
@@ -372,7 +439,7 @@ const ProgramExecutive = () => {
                     {days.map((item) => (
                         <button
                             key={item.day}
-                            onClick={() => setActiveDay(item.day)}
+                            onClick={() => handleDayChange(item.day)}
                             className={`px-2 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all text-xs sm:text-base ${
                                 activeDay === item.day
                                     ? 'bg-gray-900 text-white shadow-lg'
@@ -399,7 +466,7 @@ const ProgramExecutive = () => {
                                 </p>
                             </div>
 
-                            <div className="space-y-4 sm:space-y-6">
+                            <div className="space-y-4 sm:space-y-6 mb-20 sm:mb-0">
                                 {item.topics.map((topic, index) => (
                                     <div
                                         key={index}
@@ -433,6 +500,25 @@ const ProgramExecutive = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Mobile Bottom Navigation - только на мобильных */}
+                <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-lg">
+                    <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
+                        {days.map((item) => (
+                            <button
+                                key={item.day}
+                                onClick={() => handleDayChange(item.day)}
+                                className={`px-2 py-2.5 rounded-lg font-medium transition-all text-sm ${
+                                    activeDay === item.day
+                                        ? 'bg-gray-900 text-white shadow-lg'
+                                        : 'bg-gray-100 text-gray-700 active:bg-gray-200'
+                                }`}
+                            >
+                                День {item.day}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 

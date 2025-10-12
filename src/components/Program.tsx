@@ -9,6 +9,11 @@ const Program = () => {
     const titleAnimation = useScrollAnimation();
     const tabsAnimation = useScrollAnimation({ threshold: 0.3 });
 
+    const handleDayChange = (day: number) => {
+        setActiveDay(day);
+        document.getElementById('program')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     const days = [
         {
             day: 1,
@@ -436,7 +441,7 @@ const Program = () => {
                     {days.map((item) => (
                         <button
                             key={item.day}
-                            onClick={() => setActiveDay(item.day)}
+                            onClick={() => handleDayChange(item.day)}
                             className={`px-3 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                                 activeDay === item.day
                                     ? 'bg-gray-900 text-white shadow-lg'
@@ -464,7 +469,7 @@ const Program = () => {
                                 </p>
                             </div>
 
-                            <div className="space-y-4 sm:space-y-6">
+                            <div className="space-y-4 sm:space-y-6 mb-20 sm:mb-0">
                                 {item.topics.map((topic, index) => (
                                     <div
                                         key={index}
@@ -498,6 +503,26 @@ const Program = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* Mobile Bottom Navigation - только на мобильных */}
+                <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-lg">
+                    <div className="grid grid-cols-4 gap-2 max-w-md mx-auto">
+                        {days.map((item) => (
+                            <button
+                                key={item.day}
+                                onClick={() => handleDayChange(item.day)}
+                                className={`px-2 py-2.5 rounded-lg font-medium transition-all text-sm ${
+                                    activeDay === item.day
+                                        ? 'bg-gray-900 text-white shadow-lg'
+                                        : 'bg-gray-100 text-gray-700 active:bg-gray-200'
+                                }`}
+                            >
+                                День {item.day}
+                                {item.day === 4 && <span className="block text-xs mt-0.5">(опц.)</span>}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
