@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Award, BookOpen, Briefcase, Globe, Linkedin, Mail, MessageCircle, Brain, Code, Sparkles } from 'lucide-react';
-
+import vadim_photo from '../assets/vadim_photo.jpeg';
 // useScrollAnimation Hook
 const useScrollAnimation = (options = {}) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -139,8 +139,12 @@ const Mentor = () => {
                     <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-8 sm:p-12">
                             <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-                                <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center text-4xl font-bold text-blue-600 shadow-xl">
-                                    ВБ
+                                <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-xl overflow-hidden">
+                                    <img
+                                        src={vadim_photo}
+                                        alt="Вадим"
+                                        className="w-full h-full object-cover"
+                                    />
                                 </div>
                                 <div className="flex-1 text-center sm:text-left">
                                     <h3 className="text-2xl sm:text-3xl font-bold text-white mb-2">

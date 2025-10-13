@@ -38,51 +38,59 @@ const Hero = () => {
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-20 sm:py-32 w-full z-10">
                 {/* Переключатель курсов */}
                 <div className="mb-12 sm:mb-16">
-                    <div className="inline-flex bg-white rounded-xl sm:rounded-2xl p-1.5 sm:p-2 shadow-lg border border-gray-200 w-full sm:w-auto flex-wrap gap-1 sm:gap-0">
-                        <button
-                            onClick={() => setCourseType('developer')}
-                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
-                                courseType === 'developer'
-                                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
-                        >
-                            <Code className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-                            <span className="whitespace-nowrap hidden xs:inline">Разработчикам</span>
-                            <span className="whitespace-nowrap xs:hidden">Dev</span>
-                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(3-4д)</span>
-                        </button>
-                        <button
-                            onClick={() => setCourseType('executive')}
-                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
-                                courseType === 'executive'
-                                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
-                        >
-                            <Briefcase className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-                            <span className="whitespace-nowrap hidden xs:inline">Руководителям</span>
-                            <span className="whitespace-nowrap xs:hidden">Exec</span>
-                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(3д)</span>
-                        </button>
-                        <button
-                            onClick={() => setCourseType('claude-code')}
-                            className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 md:px-6 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm flex-1 sm:flex-initial ${
-                                courseType === 'claude-code'
-                                    ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md'
-                                    : 'text-gray-600 hover:text-gray-900'
-                            }`}
-                        >
-                            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
-                            <span className="whitespace-nowrap hidden xs:inline">Claude Code</span>
-                            <span className="whitespace-nowrap xs:hidden">Code</span>
-                            <span className="text-[10px] sm:text-xs opacity-75 ml-1 hidden sm:inline">(1д)</span>
-                        </button>
+                    <div className="inline-flex bg-white rounded-xl sm:rounded-2xl p-1.5 sm:p-2 shadow-lg border border-gray-200 w-full sm:w-auto">
+                        {/* Сетка фиксированной ширины для стабильного положения */}
+                        <div className="w-full grid grid-cols-3 gap-1 sm:gap-0">
+                            {/* Разработчикам */}
+                            <button
+                                onClick={() => setCourseType('developer')}
+                                className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm min-w-[110px] sm:min-w-[150px] ${
+                                    courseType === 'developer'
+                                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md scale-[1.02]'
+                                        : 'bg-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                <Code className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                                <span className="hidden sm:inline">Разработчикам</span>
+                                <span className="sm:hidden">Dev</span>
+                                <span className="hidden sm:inline text-[11px] opacity-70">(3-4д)</span>
+                            </button>
+
+                            {/* Руководителям */}
+                            <button
+                                onClick={() => setCourseType('executive')}
+                                className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm min-w-[110px] sm:min-w-[150px] ${
+                                    courseType === 'executive'
+                                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md scale-[1.02]'
+                                        : 'bg-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                <Briefcase className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                                <span className="hidden sm:inline">Руководителям</span>
+                                <span className="sm:hidden">Exec</span>
+                                <span className="hidden sm:inline text-[11px] opacity-70">(3д)</span>
+                            </button>
+
+                            {/* Claude Code */}
+                            <button
+                                onClick={() => setCourseType('claude-code')}
+                                className={`flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-3 rounded-lg sm:rounded-xl font-medium transition-all text-xs sm:text-sm min-w-[110px] sm:min-w-[150px] ${
+                                    courseType === 'claude-code'
+                                        ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-md scale-[1.02]'
+                                        : 'bg-transparent text-gray-600 hover:text-gray-900'
+                                }`}
+                            >
+                                <Zap className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
+                                <span className="hidden sm:inline">Claude Code</span>
+                                <span className="sm:hidden">Code</span>
+                                <span className="hidden sm:inline text-[11px] opacity-70">(1д)</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                {/* Контент Hero */}
-                <div className="max-w-3xl">
+                {/* Контент Hero с фиксированной минимальной высотой */}
+                <div className="max-w-3xl min-h-[580px] sm:min-h-[640px]">
                     {courseType === 'developer' ? (
                         <>
                             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-gray-900 mb-6 sm:mb-8 leading-tight tracking-tight">
