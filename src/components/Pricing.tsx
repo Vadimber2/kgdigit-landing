@@ -186,15 +186,7 @@ const Pricing = () => {
                         <h3 className="text-2xl font-semibold text-gray-900 mb-6 text-center">
                             Дополнительные опции
                         </h3>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="bg-white rounded-xl p-6">
-                                <h4 className="font-semibold text-gray-900 mb-3">
-                                    💳 Рассрочка
-                                </h4>
-                                <p className="text-gray-700 text-sm">
-                                    Возможна оплата в рассрочку до 6 месяцев без процентов. Первый взнос от 30%.
-                                </p>
-                            </div>
+                        <div className="grid md:grid-cols-3 gap-6">
                             <div className="bg-white rounded-xl p-6">
                                 <h4 className="font-semibold text-gray-900 mb-3">
                                     🎓 Скидки студентам

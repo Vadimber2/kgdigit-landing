@@ -1,14 +1,39 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
+// ProgramExecutive.tsx
+import { useState, useEffect, useRef } from 'react';
+import { X, Crown, Users, Target } from 'lucide-react';
 
-// Modal Component
-const Modal = ({ isOpen, onClose, title, children }: any) => {
+// -------------------- TYPES --------------------
+interface TopicDetails {
+    keyPoints: string[];
+    outcomes: string[];
+    practicalWork: string[];
+}
+
+interface Topic {
+    time: string;
+    title: string;
+    items: string[];
+    details: TopicDetails;
+}
+
+interface Day {
+    day: number;
+    title: string;
+    description: string;
+    topics: Topic[];
+}
+
+// -------------------- MODAL --------------------
+interface ModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+    title: string;
+    children: React.ReactNode;
+}
+
+const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
+        document.body.style.overflow = isOpen ? 'hidden' : 'unset';
         return () => {
             document.body.style.overflow = 'unset';
         };
@@ -22,10 +47,7 @@ const Modal = ({ isOpen, onClose, title, children }: any) => {
             <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
                 <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
                     <h3 className="text-2xl font-semibold text-gray-900">{title}</h3>
-                    <button
-                        onClick={onClose}
-                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                    >
+                    <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
                         <X className="w-6 h-6" />
                     </button>
                 </div>
@@ -35,38 +57,32 @@ const Modal = ({ isOpen, onClose, title, children }: any) => {
     );
 };
 
-// useScrollAnimation Hook
-const useScrollAnimation = (options = {}) => {
-    const [isVisible, setIsVisible] = useState(false);
-    const ref = useRef(null);
+// -------------------- SCROLL HOOK --------------------
+const useScrollAnimation = (options: IntersectionObserverInit = {}) => {
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+    const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                }
+                if (entry.isIntersecting) setIsVisible(true);
             },
             { threshold: 0.1, ...options }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
-        }
-
+        if (ref.current) observer.observe(ref.current);
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
-            }
+            if (ref.current) observer.unobserve(ref.current);
         };
-    }, []);
+    }, [options]);
 
-    return { ref, isVisible };
+    return { ref, isVisible } as { ref: React.RefObject<HTMLDivElement>; isVisible: boolean };
 };
 
-const ProgramExecutive = () => {
-    const [activeDay, setActiveDay] = useState(1);
-    const [selectedTopic, setSelectedTopic] = useState<any>(null);
+// -------------------- MAIN COMPONENT --------------------
+const ProgramExecutive = (): JSX.Element => {
+    const [activeDay, setActiveDay] = useState<number>(1);
+    const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
 
     const titleAnimation = useScrollAnimation();
     const tabsAnimation = useScrollAnimation({ threshold: 0.3 });
@@ -76,7 +92,14 @@ const ProgramExecutive = () => {
         document.getElementById('program')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     };
 
-    const days = [
+    // Иконки для каждого дня
+    const dayIcons = [
+        { icon: Crown, label: 'Быстрые победы' },
+        { icon: Users, label: 'Бизнес-процессы' },
+        { icon: Target, label: 'Стратегия внедрения' }
+    ];
+
+    const days: Day[] = [
         {
             day: 1,
             title: "Claude для руководителя - быстрые победы",
@@ -436,38 +459,35 @@ const ProgramExecutive = () => {
                         tabsAnimation.isVisible ? 'animate-slide-up-fade' : 'animate-on-scroll'
                     }`}
                 >
-                    {days.map((item) => (
-                        <button
-                            key={item.day}
-                            onClick={() => handleDayChange(item.day)}
-                            className={`px-2 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium transition-all text-xs sm:text-base ${
-                                activeDay === item.day
-                                    ? 'bg-gray-900 text-white shadow-lg'
-                                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                            }`}
-                        >
-                            День {item.day}
-                        </button>
-                    ))}
+                    {days.map((item) => {
+                        const IconComponent = dayIcons[item.day - 1].icon;
+                        return (
+                            <button
+                                key={item.day}
+                                onClick={() => handleDayChange(item.day)}
+                                className={`px-3 sm:px-6 py-3 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base flex items-center justify-center gap-2 ${
+                                    activeDay === item.day ? 'bg-gray-900 text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                }`}
+                            >
+                                <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
+                                <span>День {item.day}</span>
+                            </button>
+                        );
+                    })}
                 </div>
 
                 <div className="max-w-5xl mx-auto">
-                    {days.map((item) => (
-                        <div
-                            key={item.day}
-                            className={`${activeDay === item.day ? 'block' : 'hidden'}`}
-                        >
+                    {days.map((d) => (
+                        <div key={d.day} className={activeDay === d.day ? 'block' : 'hidden'}>
                             <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 mb-6 sm:mb-8 border border-gray-200">
                                 <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-900 mb-2 sm:mb-3">
-                                    {item.title}
+                                    {d.title}
                                 </h3>
-                                <p className="text-base sm:text-lg text-gray-600">
-                                    {item.description}
-                                </p>
+                                <p className="text-base sm:text-lg text-gray-600">{d.description}</p>
                             </div>
 
                             <div className="space-y-4 sm:space-y-6 mb-20 sm:mb-0">
-                                {item.topics.map((topic, index) => (
+                                {d.topics.map((topic: Topic, index: number) => (
                                     <div
                                         key={index}
                                         onClick={() => setSelectedTopic(topic)}
@@ -479,19 +499,16 @@ const ProgramExecutive = () => {
                                                 <div className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-xs sm:text-sm font-medium w-fit">
                                                     {topic.time}
                                                 </div>
-                                                <h4 className="text-lg sm:text-xl font-semibold text-gray-900">
-                                                    {topic.title}
-                                                </h4>
+                                                <h4 className="text-lg sm:text-xl font-semibold text-gray-900">{topic.title}</h4>
                                             </div>
-                                            <span className="text-blue-600 text-sm font-medium">
-                        Подробнее →
-                      </span>
+                                            <span className="text-blue-600 text-sm font-medium">Подробнее →</span>
                                         </div>
+
                                         <ul className="space-y-2">
-                                            {topic.items.map((item, i) => (
+                                            {topic.items.map((itm: string, i: number) => (
                                                 <li key={i} className="flex items-start gap-2 text-sm sm:text-base text-gray-700">
                                                     <span className="text-blue-500 mt-1">•</span>
-                                                    <span>{item}</span>
+                                                    <span>{itm}</span>
                                                 </li>
                                             ))}
                                         </ul>
@@ -502,43 +519,39 @@ const ProgramExecutive = () => {
                     ))}
                 </div>
 
-                {/* Mobile Bottom Navigation - только на мобильных */}
+                {/* Mobile Bottom Navigation с увеличенными отступами */}
                 <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-lg">
                     <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
-                        {days.map((item) => (
-                            <button
-                                key={item.day}
-                                onClick={() => handleDayChange(item.day)}
-                                className={`px-2 py-2.5 rounded-lg font-medium transition-all text-sm ${
-                                    activeDay === item.day
-                                        ? 'bg-gray-900 text-white shadow-lg'
-                                        : 'bg-gray-100 text-gray-700 active:bg-gray-200'
-                                }`}
-                            >
-                                День {item.day}
-                            </button>
-                        ))}
+                        {days.map((d) => {
+                            const IconComponent = dayIcons[d.day - 1].icon;
+                            return (
+                                <button
+                                    key={d.day}
+                                    onClick={() => handleDayChange(d.day)}
+                                    className={`px-3 py-3 rounded-lg font-medium transition-all text-sm flex flex-col items-center justify-center gap-1 ${
+                                        activeDay === d.day
+                                            ? 'bg-gray-900 text-white shadow-lg'
+                                            : 'bg-gray-100 text-gray-700 active:bg-gray-200'
+                                    }`}
+                                >
+                                    <IconComponent className="w-4 h-4" />
+                                    <span>День {d.day}</span>
+                                </button>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
 
-            <Modal
-                isOpen={!!selectedTopic}
-                onClose={() => setSelectedTopic(null)}
-                title={selectedTopic?.title || ''}
-            >
+            <Modal isOpen={!!selectedTopic} onClose={() => setSelectedTopic(null)} title={selectedTopic?.title ?? ''}>
                 {selectedTopic && (
                     <div className="space-y-6">
                         <div className="bg-blue-50 rounded-xl p-6">
-                            <div className="text-sm text-blue-700 font-medium mb-3">
-                                {selectedTopic.time}
-                            </div>
+                            <div className="text-sm text-blue-700 font-medium mb-3">{selectedTopic.time}</div>
                         </div>
 
                         <div>
-                            <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                                Ключевые темы
-                            </h4>
+                            <h4 className="text-lg font-semibold text-gray-900 mb-3">Ключевые темы</h4>
                             <ul className="space-y-2">
                                 {selectedTopic.details.keyPoints.map((point: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
@@ -550,9 +563,7 @@ const ProgramExecutive = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                                Что вы получите
-                            </h4>
+                            <h4 className="text-lg font-semibold text-gray-900 mb-3">Что вы получите</h4>
                             <ul className="space-y-2">
                                 {selectedTopic.details.outcomes.map((outcome: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3 text-gray-700">
@@ -564,9 +575,7 @@ const ProgramExecutive = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-lg font-semibold text-gray-900 mb-3">
-                                Практическая работа
-                            </h4>
+                            <h4 className="text-lg font-semibold text-gray-900 mb-3">Практическая работа</h4>
                             <ul className="space-y-2">
                                 {selectedTopic.details.practicalWork.map((work: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3 p-3 bg-orange-50 rounded-lg">
