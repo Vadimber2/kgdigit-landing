@@ -6,10 +6,68 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [company, setCompany] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    // Access Key от Web3Forms
+    const WEB3FORMS_ACCESS_KEY = 'za0lhh0pk7yt7c';
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        alert(`Спасибо за заявку, ${name}! Мы свяжемся с вами в ближайшее время.`);
+
+        if (!name || !email || !phone) {
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        const formData = {
+            access_key: WEB3FORMS_ACCESS_KEY,
+            subject: '🎓 Новая заявка на курс Claude!',
+            from_name: 'Курсы Claude',
+            name: name,
+            email: email,
+            phone: phone,
+            company: company || 'Не указана',
+            message: `
+Новая заявка на обучение:
+
+Имя: ${name}
+Email: ${email}
+Телефон: ${phone}
+Компания: ${company || 'Не указана'}
+Дата заявки: ${new Date().toLocaleString('ru-RU')}
+            `.trim()
+        };
+
+        try {
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert(`Спасибо за заявку, ${name}! Мы свяжемся с вами в ближайшее время.`);
+                // Очищаем форму
+                setName('');
+                setEmail('');
+                setPhone('');
+                setCompany('');
+            } else {
+                throw new Error('Ошибка отправки');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Произошла ошибка при отправке заявки. Пожалуйста, попробуйте позже или свяжитесь с нами напрямую.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -38,6 +96,7 @@ const Register = () => {
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
                                     placeholder="Иван Иванов"
                                     required
+                                    disabled={isSubmitting}
                                 />
                             </div>
 
@@ -52,6 +111,7 @@ const Register = () => {
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
                                     placeholder="ivan@example.com"
                                     required
+                                    disabled={isSubmitting}
                                 />
                             </div>
 
@@ -66,6 +126,7 @@ const Register = () => {
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
                                     placeholder="+996 XXX XXX XXX"
                                     required
+                                    disabled={isSubmitting}
                                 />
                             </div>
 
@@ -79,14 +140,16 @@ const Register = () => {
                                     onChange={(e) => setCompany(e.target.value)}
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
                                     placeholder="Название компании"
+                                    disabled={isSubmitting}
                                 />
                             </div>
 
                             <button
                                 onClick={handleSubmit}
-                                className="w-full px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors shadow-lg flex items-center justify-center gap-2"
+                                disabled={isSubmitting}
+                                className="w-full px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors shadow-lg flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
                             >
-                                Отправить заявку
+                                {isSubmitting ? 'Отправка...' : 'Отправить заявку'}
                                 <Send className="w-5 h-5" />
                             </button>
 
