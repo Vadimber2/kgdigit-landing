@@ -3,6 +3,32 @@ import { Send, CheckCircle } from "lucide-react";
 
 const Register = () => {
     const [isSent, setIsSent] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            const response = await fetch("https://formsubmit.co/vadim.berkovich@gmail.com", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                setIsSent(true);
+            } else {
+                alert("Ошибка при отправке формы. Попробуйте снова.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Не удалось отправить форму. Проверьте интернет или попробуйте позже.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div
@@ -22,13 +48,10 @@ const Register = () => {
                 <div className="max-w-2xl mx-auto">
                     {!isSent ? (
                         <form
-                            action="https://formsubmit.co/vadim.berkovich@gmail.com"
-                            method="POST"
-                            target="_blank"
-                            onSubmit={() => setIsSent(true)}
+                            onSubmit={handleSubmit}
                             className="bg-white rounded-2xl p-8 md:p-12 text-gray-900 space-y-6 shadow-xl"
                         >
-                            {/* --- Hidden Inputs (служебные) --- */}
+                            {/* Hidden fields */}
                             <input
                                 type="hidden"
                                 name="_subject"
@@ -36,7 +59,6 @@ const Register = () => {
                             />
                             <input type="hidden" name="_template" value="table" />
                             <input type="hidden" name="_captcha" value="false" />
-                            <input type="hidden" name="_next" value="https://kgdigit.com" />
                             <input
                                 type="hidden"
                                 name="Дата отправки"
@@ -44,7 +66,7 @@ const Register = () => {
                             />
                             <input type="hidden" name="Источник" value="kgdigit.com" />
 
-                            {/* --- Поля формы --- */}
+                            {/* Visible fields */}
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Ваше имя *
@@ -52,7 +74,7 @@ const Register = () => {
                                 <input
                                     name="Имя"
                                     type="text"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="Иван Иванов"
                                     required
                                 />
@@ -65,7 +87,7 @@ const Register = () => {
                                 <input
                                     name="Email"
                                     type="email"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="ivan@example.com"
                                     required
                                 />
@@ -78,7 +100,7 @@ const Register = () => {
                                 <input
                                     name="Телефон"
                                     type="tel"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="+996 XXX XXX XXX"
                                     required
                                 />
@@ -91,16 +113,17 @@ const Register = () => {
                                 <input
                                     name="Компания"
                                     type="text"
-                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent outline-none"
+                                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="Название компании"
                                 />
                             </div>
 
                             <button
                                 type="submit"
-                                className="w-full px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-[0.98]"
+                                disabled={isSubmitting}
+                                className="w-full px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-all duration-200 shadow-lg flex items-center justify-center gap-2 disabled:bg-gray-400 disabled:cursor-not-allowed hover:scale-[1.02]"
                             >
-                                Отправить заявку
+                                {isSubmitting ? "Отправка..." : "Отправить заявку"}
                                 <Send className="w-5 h-5" />
                             </button>
 
@@ -111,9 +134,7 @@ const Register = () => {
                     ) : (
                         <div className="bg-white rounded-2xl p-10 md:p-16 text-gray-900 text-center shadow-xl">
                             <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-6" />
-                            <h3 className="text-3xl font-bold mb-4">
-                                Спасибо за заявку! 🚀
-                            </h3>
+                            <h3 className="text-3xl font-bold mb-4">Спасибо за заявку! 🚀</h3>
                             <p className="text-lg text-gray-700 mb-6">
                                 Мы уже получили вашу информацию.
                                 Наш менеджер свяжется с вами в ближайшее время.
@@ -127,7 +148,7 @@ const Register = () => {
                         </div>
                     )}
 
-                    {/* --- Инфо-блоки --- */}
+                    {/* Info boxes */}
                     <div className="mt-12 grid md:grid-cols-2 gap-6 text-center">
                         <div className="bg-white/10 backdrop-blur rounded-xl p-6">
                             <div className="text-3xl font-bold text-white mb-2">3–4 дня</div>
