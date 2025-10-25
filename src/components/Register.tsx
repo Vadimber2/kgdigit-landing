@@ -9,7 +9,9 @@ const Register = () => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        const formData = new FormData(e.currentTarget);
+        // Сохраняем ссылку на форму до асинхронных операций
+        const form = e.currentTarget;
+        const formData = new FormData(form);
 
         // Конвертируем FormData в JSON для Web3Forms
         const object: Record<string, string> = {};
@@ -32,7 +34,7 @@ const Register = () => {
 
             if (result.success) {
                 setIsSent(true);
-                e.currentTarget.reset();
+                form.reset();
             } else {
                 alert("Ошибка при отправке формы. Попробуйте снова.");
             }
