@@ -11,14 +11,28 @@ const Register = () => {
 
         const formData = new FormData(e.currentTarget);
 
+        // Конвертируем FormData в JSON для Web3Forms
+        const object: Record<string, string> = {};
+        formData.forEach((value, key) => {
+            object[key] = value.toString();
+        });
+        const json = JSON.stringify(object);
+
         try {
-            const response = await fetch("https://formsubmit.co/vadim.berkovich@gmail.com", {
+            const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
-                body: formData,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: json,
             });
 
-            if (response.ok) {
+            const result = await response.json();
+
+            if (result.success) {
                 setIsSent(true);
+                e.currentTarget.reset();
             } else {
                 alert("Ошибка при отправке формы. Попробуйте снова.");
             }
@@ -51,20 +65,25 @@ const Register = () => {
                             onSubmit={handleSubmit}
                             className="bg-white rounded-2xl p-8 md:p-12 text-gray-900 space-y-6 shadow-xl"
                         >
-                            {/* Hidden fields */}
+                            {/* Web3Forms Access Key - ВАЖНО: Замените на ваш ключ с https://web3forms.com */}
                             <input
                                 type="hidden"
-                                name="_subject"
-                                value="Новая заявка с сайта kgdigit.com 🚀"
+                                name="access_key"
+                                value="YOUR_ACCESS_KEY_HERE"
                             />
-                            <input type="hidden" name="_template" value="table" />
-                            <input type="hidden" name="_captcha" value="false" />
+
+                            {/* Опциональные настройки Web3Forms */}
                             <input
                                 type="hidden"
-                                name="Дата отправки"
-                                value={new Date().toLocaleString("ru-RU")}
+                                name="subject"
+                                value="Новая заявка с сайта kgdigit.tech 🚀"
                             />
-                            <input type="hidden" name="Источник" value="kgdigit.com" />
+                            <input
+                                type="hidden"
+                                name="from_name"
+                                value="KG Digital Landing"
+                            />
+                            <input type="hidden" name="redirect" value="false" />
 
                             {/* Visible fields */}
                             <div>
@@ -72,7 +91,7 @@ const Register = () => {
                                     Ваше имя *
                                 </label>
                                 <input
-                                    name="Имя"
+                                    name="name"
                                     type="text"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="Иван Иванов"
@@ -85,7 +104,7 @@ const Register = () => {
                                     Email *
                                 </label>
                                 <input
-                                    name="Email"
+                                    name="email"
                                     type="email"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="ivan@example.com"
@@ -98,10 +117,10 @@ const Register = () => {
                                     Телефон *
                                 </label>
                                 <input
-                                    name="Телефон"
+                                    name="phone"
                                     type="tel"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
-                                    placeholder="+996 XXX XXX XXX"
+                                    placeholder="+996 508 120 130"
                                     required
                                 />
                             </div>
@@ -111,7 +130,7 @@ const Register = () => {
                                     Компания (опционально)
                                 </label>
                                 <input
-                                    name="Компания"
+                                    name="company"
                                     type="text"
                                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none"
                                     placeholder="Название компании"
