@@ -9,12 +9,12 @@ const Footer = () => {
                     {/* О курсе */}
                     <div>
                         <div className="text-2xl font-semibold text-white mb-4">
-                            KG<span className="text-orange-600">Digit</span>
+                            KG<span className="text-orange-700">Digit</span>
                         </div>
                         <p className="text-gray-400 mb-4">
                             Профессиональное обучение работе с Anthropic Claude и Claude Code для технических специалистов
                         </p>
-                        <div className="text-orange-600 font-medium">
+                        <div className="text-orange-700 font-medium">
                             kgdigit.tech
                         </div>
                     </div>

@@ -32,7 +32,7 @@ const Header = () => {
             <div className="max-w-7xl mx-auto px-6">
                 <div className="flex items-center justify-between h-16">
                     <a href="#" className="text-2xl font-semibold text-gray-900">
-                        KG<span className="text-orange-600">Digit</span>
+                        KG<span className="text-orange-700">Digit</span>
                     </a>
 
                     {/* Desktop nav */}
@@ -41,7 +41,7 @@ const Header = () => {
                             <a
                                 key={item.label}
                                 href={item.href}
-                                className="text-gray-700 hover:text-orange-600 transition-colors text-sm font-medium"
+                                className="text-gray-700 hover:text-orange-700 transition-colors text-sm font-medium"
                             >
                                 {item.label}
                             </a>
@@ -59,6 +59,8 @@ const Header = () => {
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="md:hidden p-2 text-gray-700"
+                        aria-label={isMobileMenuOpen ? "Закрыть меню" : "Открыть меню"}
+                        aria-expanded={isMobileMenuOpen}
                     >
                         {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
@@ -73,7 +75,7 @@ const Header = () => {
                                     key={item.label}
                                     href={item.href}
                                     onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-gray-700 hover:text-orange-600 transition-colors font-medium"
+                                    className="text-gray-700 hover:text-orange-700 transition-colors font-medium"
                                 >
                                     {item.label}
                                 </a>

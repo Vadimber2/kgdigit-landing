@@ -45,7 +45,7 @@ const AudienceClaudeCode = () => {
                                     : 'animate-on-scroll'
                             }`}
                         >
-                            <Check className="w-5 h-5 text-orange-600 flex-shrink-0" />
+                            <Check className="w-5 h-5 text-orange-700 flex-shrink-0" />
                             <span className="text-lg text-gray-900">{role}</span>
                         </div>
                     ))}

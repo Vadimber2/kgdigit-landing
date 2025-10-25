@@ -234,15 +234,15 @@ const Hero = () => {
                             <div className="mt-8 sm:mt-12 p-6 bg-gradient-to-r from-orange-50 to-red-50 rounded-xl border border-orange-200">
                                 <div className="grid grid-cols-3 gap-4 text-center">
                                     <div>
-                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">4</div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-700 mb-1">4</div>
                                         <div className="text-xs sm:text-sm text-gray-600">блока практики</div>
                                     </div>
                                     <div>
-                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">10x</div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-700 mb-1">10x</div>
                                         <div className="text-xs sm:text-sm text-gray-600">ускорение</div>
                                     </div>
                                     <div>
-                                        <div className="text-2xl sm:text-3xl font-bold text-orange-600 mb-1">CI/CD</div>
+                                        <div className="text-2xl sm:text-3xl font-bold text-orange-700 mb-1">CI/CD</div>
                                         <div className="text-xs sm:text-sm text-gray-600">автоматизация</div>
                                     </div>
                                 </div>

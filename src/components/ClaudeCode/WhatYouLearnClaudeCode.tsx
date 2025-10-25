@@ -85,7 +85,7 @@ const WhatYouLearnClaudeCode = () => {
                             }`}
                         >
                             <div className="flex items-start gap-4 mb-6">
-                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center flex-shrink-0 font-semibold">
+                                <div className="w-8 h-8 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center flex-shrink-0 font-semibold">
                                     {index + 1}
                                 </div>
                                 <h3 className="text-2xl font-semibold text-gray-900">

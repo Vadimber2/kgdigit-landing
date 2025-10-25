@@ -177,7 +177,7 @@ const Pricing = () => {
                                 <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                                     {plan.name}
                                 </h3>
-                                <div className="text-3xl font-bold text-orange-600 mb-2">
+                                <div className="text-3xl font-bold text-orange-700 mb-2">
                                     {plan.price}
                                 </div>
                                 <p className="text-gray-600">
@@ -244,7 +244,7 @@ const Pricing = () => {
 
                     <p className="text-center text-gray-600 mt-8">
                         Остались вопросы по стоимости?{' '}
-                        <a href="#register" className="text-orange-600 hover:text-orange-700 font-medium">
+                        <a href="#register" className="text-orange-700 hover:text-orange-700 font-medium">
                             Свяжитесь с нами
                         </a>
                     </p>

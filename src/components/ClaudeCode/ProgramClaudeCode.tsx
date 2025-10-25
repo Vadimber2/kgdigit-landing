@@ -291,7 +291,7 @@ const ProgramClaudeCode = () => {
                                         )}
 
                                         {!isBreak && (
-                                            <div className="mt-3 text-orange-600 text-sm font-medium">
+                                            <div className="mt-3 text-orange-700 text-sm font-medium">
                                                 Подробнее →
                                             </div>
                                         )}

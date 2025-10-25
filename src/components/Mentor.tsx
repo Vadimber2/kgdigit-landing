@@ -259,7 +259,7 @@ const Mentor = () => {
                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                                     <div>
                                         <h4 className="text-xl font-semibold text-gray-900">{job.role}</h4>
-                                        <p className="text-orange-600 font-medium">{job.company}</p>
+                                        <p className="text-orange-700 font-medium">{job.company}</p>
                                     </div>
                                     <span className="text-sm text-gray-500 mt-2 sm:mt-0">{job.period}</span>
                                 </div>
@@ -293,7 +293,7 @@ const Mentor = () => {
                                         <Award className="w-6 h-6 text-yellow-600" />
                                     </div>
                                     <div>
-                                        <div className="text-sm text-orange-600 font-medium mb-1">{achievement.year}</div>
+                                        <div className="text-sm text-orange-700 font-medium mb-1">{achievement.year}</div>
                                         <h4 className="text-lg font-semibold text-gray-900 mb-2">{achievement.title}</h4>
                                         <p className="text-gray-600 text-sm">{achievement.description}</p>
                                     </div>
@@ -368,7 +368,7 @@ const Mentor = () => {
                             Получите знания от архитектора, который работал в Microsoft, внедрял AI-решения для государственных структур и образовательных систем по всему миру
                         </p>
                         <div className="flex flex-wrap gap-4 justify-center">
-                            <a href="#register" className="px-8 py-3 bg-white text-orange-600 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                            <a href="#register" className="px-8 py-3 bg-white text-orange-700 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                                 Записаться на курс
                             </a>
                             <a href="https://www.linkedin.com/in/vadimber" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-semibold transition-colors">

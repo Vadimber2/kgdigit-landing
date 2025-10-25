@@ -87,9 +87,9 @@ const RequirementsExecutive = () => {
                                 <div className="flex items-center gap-3 mb-6">
                                     <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center">
                                         {index === 0 ? (
-                                            <FileText className="w-6 h-6 text-orange-600" />
+                                            <FileText className="w-6 h-6 text-orange-700" />
                                         ) : (
-                                            <Lightbulb className="w-6 h-6 text-orange-600" />
+                                            <Lightbulb className="w-6 h-6 text-orange-700" />
                                         )}
                                     </div>
                                     <h4 className="text-xl font-semibold text-gray-900">

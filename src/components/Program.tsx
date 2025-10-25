@@ -486,7 +486,7 @@ const Program = () => {
                                                     {topic.title}
                                                 </h4>
                                             </div>
-                                            <span className="text-orange-600 text-sm font-medium">
+                                            <span className="text-orange-700 text-sm font-medium">
                         Подробнее →
                       </span>
                                         </div>

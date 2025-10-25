@@ -32,9 +32,10 @@ const AppContent = () => {
     const { courseType } = useCourse();
 
     return (
-        <div className="min-h-screen bg-white">
+        <>
             <Header />
-            <Hero />
+            <main className="min-h-screen bg-white">
+                <Hero />
 
             {courseType === 'developer' && (
                 <>
@@ -77,10 +78,11 @@ const AppContent = () => {
                 </>
             )}
 
-            <FAQ />
-            <Register />
+                <FAQ />
+                <Register />
+            </main>
             <Footer />
-        </div>
+        </>
     );
 };
 

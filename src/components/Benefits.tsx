@@ -254,13 +254,13 @@ const Benefits = () => {
                             <div className="w-14 h-14 mx-auto mb-4 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center text-white group-hover:scale-110 transition-transform">
                                 {benefit.icon}
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-orange-600 transition-colors">
+                            <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-orange-700 transition-colors">
                                 {benefit.title}
                             </h3>
                             <p className="text-gray-600 mb-3">
                                 {benefit.description}
                             </p>
-                            <span className="text-orange-600 text-sm font-medium">
+                            <span className="text-orange-700 text-sm font-medium">
                 Подробнее →
               </span>
                         </div>
@@ -281,7 +281,7 @@ const Benefits = () => {
                             <div key={index}>
                                 <div className="flex justify-between items-center mb-2">
                                     <span className="text-gray-900 font-medium">{item.label}</span>
-                                    <span className="text-orange-600 font-semibold">{item.value}</span>
+                                    <span className="text-orange-700 font-semibold">{item.value}</span>
                                 </div>
                                 <div className="w-full bg-gray-200 rounded-full h-3">
                                     <div
