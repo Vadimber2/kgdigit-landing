@@ -142,7 +142,10 @@ const Mentor = () => {
                                 <div className="w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-xl overflow-hidden">
                                     <img
                                         src={vadim_photo}
-                                        alt="Вадим"
+                                        alt="Вадим Беркович - AI-архитектор и ментор курса"
+                                        width="128"
+                                        height="128"
+                                        loading="lazy"
                                         className="w-full h-full object-cover"
                                     />
                                 </div>

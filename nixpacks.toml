@@ -8,4 +8,4 @@ cmds = ['npm ci']
 cmds = ['npm run build']
 
 [start]
-cmd = 'npx serve dist -l 3100'
+cmd = 'npx serve dist -l 3100 -c serve.json'
