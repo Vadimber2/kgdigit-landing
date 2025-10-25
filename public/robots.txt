@@ -1,0 +1,16 @@
+# Robots.txt для kgdigit.tech
+# Разрешаем всем поисковым роботам индексировать сайт
+
+User-agent: *
+Allow: /
+
+# Запрещаем индексацию служебных файлов
+Disallow: /assets/
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Карта сайта
+Sitemap: https://kgdigit.tech/sitemap.xml
+
+# Основной хост
+Host: https://kgdigit.tech
