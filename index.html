@@ -11,28 +11,6 @@
     <link rel="preconnect" href="https://mc.yandex.ru" />
     <link rel="dns-prefetch" href="https://mc.yandex.ru" />
 
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7ZTJWK5S3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-H7ZTJWK5S3');
-    </script>
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-      (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104848176', 'ym');
-
-      ym(104848176, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <!-- /Yandex.Metrika counter -->
 
     <!-- Primary Meta Tags -->
     <title>Курсы Anthropic Claude и Claude Code - KG Digital</title>
@@ -137,10 +115,45 @@
     </script>
   </head>
   <body>
-    <!-- Yandex.Metrika noscript -->
-    <noscript><div><img src="https://mc.yandex.ru/watch/104848176" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Deferred Analytics - loads after LCP -->
+    <script>
+      // Load analytics after page is interactive
+      function loadAnalytics() {
+        // Google Analytics
+        var gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-H7ZTJWK5S3';
+        document.head.appendChild(gaScript);
+
+        gaScript.onload = function() {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-H7ZTJWK5S3');
+        };
+
+        // Yandex.Metrika
+        (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a);
+          k.onload = function() {
+            ym(104848176, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+          };
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104848176', 'ym');
+      }
+
+      // Delay analytics until after page is fully loaded
+      // Wait for LCP + buffer time to avoid interfering with critical metrics
+      window.addEventListener('load', function() {
+        setTimeout(loadAnalytics, 3000); // Load 3s after page load
+      });
+    </script>
+
+    <!-- Yandex.Metrika noscript -->
+    <noscript><div><img src="https://mc.yandex.ru/watch/104848176" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   </body>
 </html>
