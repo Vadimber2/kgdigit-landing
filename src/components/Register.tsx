@@ -65,11 +65,11 @@ const Register = () => {
                             onSubmit={handleSubmit}
                             className="bg-white rounded-2xl p-8 md:p-12 text-gray-900 space-y-6 shadow-xl"
                         >
-                            {/* Web3Forms Access Key - ВАЖНО: Замените на ваш ключ с https://web3forms.com */}
+                            {/* Web3Forms Access Key */}
                             <input
                                 type="hidden"
                                 name="access_key"
-                                value="YOUR_ACCESS_KEY_HERE"
+                                value="d4573125-e740-4b8d-9844-9a4f520416a9"
                             />
 
                             {/* Опциональные настройки Web3Forms */}
